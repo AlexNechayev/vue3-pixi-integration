@@ -1,0 +1,51 @@
+// README.md
+
+# Vue 3 + PIXI.js Application
+
+This project demonstrates the integration of PIXI.js with Vue 3 using the Composition API.
+
+## Project Setup
+
+```bash
+# Install dependencies
+npm install
+
+# Serve for development
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview the production build
+npm run preview
+```
+
+## Asset Requirements
+
+Before running the application, make sure you have the following assets:
+
+1. Place a `bunny.png` file in the `public/assets/` directory
+2. Place a `background.jpg` file in the `public/assets/` directory
+
+These images can be downloaded from:
+
+- Bunny: You can use the classic PIXI.js bunny sprite
+- Background: Any suitable background image
+
+## Features
+
+- Responsive PIXI.js canvas
+- Sprite management with Vue 3 Composition API
+- Animation control
+- Dynamic sprite addition/removal
+- Resource management to prevent memory leaks
+
+## Project Structure
+
+- `components/`: Vue components
+  - `PixiRenderer.vue`: Base component for PIXI.js rendering
+  - `GameScene.vue`: Game scene implementation
+- `composables/`: Reusable Vue composition functions
+  - `usePixiSprite.js`: For sprite management
+  - `usePixiResources.js`: For resource cleanup
+  - `useResponsiveCanvas.js`: For responsive canvas handling
