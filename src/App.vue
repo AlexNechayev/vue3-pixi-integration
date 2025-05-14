@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <header>
-      <h1>Vue 3 + PIXI.js Integration</h1>
+      <h1>Powering Your Vue.js Application with PixiJS</h1>
       <div class="controls">
         <button @click="toggleAnimation">{{ isAnimating ? 'Pause' : 'Play' }}</button>
         <button @click="addSprite">Add Sprite</button>
@@ -9,7 +9,7 @@
       </div>
     </header>
     <main>
-      <GameScene ref="gameScene" :isAnimating="isAnimating" @sprites-updated="onSpritesUpdated" />
+      <GameScene ref="gameScene" :isAnimating="isAnimating" @spritesUpdated="onSpritesUpdated" />
     </main>
     <footer>
       <p>Sprites Count: {{ spritesCount }}</p>
