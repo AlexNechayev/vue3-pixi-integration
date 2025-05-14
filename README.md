@@ -20,18 +20,6 @@ npm run build
 npm run preview
 ```
 
-## Asset Requirements
-
-Before running the application, make sure you have the following assets:
-
-1. Place a `bunny.png` file in the `public/assets/` directory
-2. Place a `background.jpg` file in the `public/assets/` directory
-
-These images can be downloaded from:
-
-- Bunny: You can use the classic PIXI.js bunny sprite
-- Background: Any suitable background image
-
 ## Features
 
 - Responsive PIXI.js canvas
