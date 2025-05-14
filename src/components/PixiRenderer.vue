@@ -8,7 +8,7 @@ import * as PIXI from 'pixi.js'
 import { useResponsiveCanvas } from '../composables/useResponsiveCanvas'
 
 const props = defineProps({
-  backgroundColor: { type: Number, default: 0x1099bb },
+  backgroundColor: { type: Number, default: 0x35495e },
   isAnimating: { type: Boolean, default: true },
 })
 
@@ -41,7 +41,11 @@ watch(
   () => props.isAnimating,
   (isAnimating) => {
     if (app) {
-      app.ticker.started = isAnimating
+      if (isAnimating) {
+        app.ticker.start()
+      } else {
+        app.ticker.stop()
+      }
     }
   },
 )
