@@ -30,11 +30,11 @@ const toggleAnimation = () => {
 }
 
 const addSprite = () => {
-  gameScene.value?.addBunny()
+  gameScene.value?.addSceneSprite()
 }
 
 const removeSprite = () => {
-  gameScene.value?.removeBunny()
+  gameScene.value?.removeSceneSprite()
 }
 
 const onSpritesUpdated = (count) => {

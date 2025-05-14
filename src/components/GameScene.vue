@@ -8,12 +8,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, watch } from 'vue'
 import PixiRenderer from './PixiRenderer.vue'
 import { usePixiSprite } from '../composables/usePixiSprite'
 import { usePixiResources } from '../composables/usePixiResources'
 
-const props = defineProps({
+defineProps({
   isAnimating: { type: Boolean, default: true },
 })
 
@@ -31,7 +31,7 @@ const onAppReady = (pixiApp) => {
   const { registerResource } = usePixiResources(app)
 
   // Load background first
-  const { sprite: bgSprite, createSprite: createBgSprite } = usePixiSprite(app)
+  const { createSprite: createBgSprite } = usePixiSprite(app)
   background.value = createBgSprite('/assets/background.jpg')
   registerResource(background.value)
 
@@ -47,69 +47,69 @@ const onAppReady = (pixiApp) => {
 
     // Add initial bunnies
     for (let i = 0; i < 5; i++) {
-      addBunny()
+      addSceneSprite()
     }
   }
 }
 
-// Add a new bunny sprite to the scene
-const addBunny = () => {
+// Add a new sprite sprite to the scene
+const addSceneSprite = () => {
   if (!app) return
 
-  const { sprite: bunnySprite, createSprite: createBunnySprite } = usePixiSprite(app)
-  const bunny = createBunnySprite('/assets/bunny.png')
+  const { createSprite: createSceneSprite } = usePixiSprite(app)
+  const sprite = createSceneSprite('/assets/vue-logo.png')
 
-  if (bunny) {
+  if (sprite) {
     // Set anchor point to center
-    bunny.anchor.set(0.5)
+    sprite.anchor.set(0.5)
 
     // Position randomly on screen
-    bunny.x = Math.random() * app.screen.width
-    bunny.y = Math.random() * app.screen.height
+    sprite.x = Math.random() * app.screen.width
+    sprite.y = Math.random() * app.screen.height
 
     // Add random velocity
-    bunny.vx = (Math.random() - 0.5) * 5
-    bunny.vy = (Math.random() - 0.5) * 5
+    sprite.vx = (Math.random() - 0.5) * 5
+    sprite.vy = (Math.random() - 0.5) * 5
 
     // Add to bunnies array
-    bunnies.value.push(bunny)
+    bunnies.value.push(sprite)
 
     // Emit updated count
     emit('sprites-updated', bunnies.value.length)
   }
 
-  return bunny
+  return sprite
 }
 
-// Remove the last bunny sprite
-const removeBunny = () => {
+// Remove the last sprite sprite
+const removeSceneSprite = () => {
   if (bunnies.value.length > 0 && app) {
-    const bunny = bunnies.value.pop()
-    app.stage.removeChild(bunny)
-    bunny.destroy()
+    const sprite = bunnies.value.pop()
+    app.stage.removeChild(sprite)
+    sprite.destroy()
 
     // Emit updated count
     emit('sprites-updated', bunnies.value.length)
   }
 }
 
-// Update bunny positions and rotations
+// Update sprite positions and rotations
 const updateBunnies = (delta) => {
-  bunnies.value.forEach((bunny) => {
+  bunnies.value.forEach((sprite) => {
     // Update position
-    bunny.x += bunny.vx * delta
-    bunny.y += bunny.vy * delta
+    sprite.x += sprite.vx * delta
+    sprite.y += sprite.vy * delta
 
     // Add a slight rotation
-    bunny.rotation += 0.01 * delta
+    sprite.rotation += 0.01 * delta
 
     // Bounce off edges
-    if (bunny.x < 0 || bunny.x > app.screen.width) {
-      bunny.vx *= -1
+    if (sprite.x < 0 || sprite.x > app.screen.width) {
+      sprite.vx *= -1
     }
 
-    if (bunny.y < 0 || bunny.y > app.screen.height) {
-      bunny.vy *= -1
+    if (sprite.y < 0 || sprite.y > app.screen.height) {
+      sprite.vy *= -1
     }
   })
 }
@@ -127,5 +127,5 @@ watch(
 )
 
 // Expose methods
-defineExpose({ addBunny, removeBunny })
+defineExpose({ addSceneSprite, removeSceneSprite })
 </script>
