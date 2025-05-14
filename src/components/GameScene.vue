@@ -17,12 +17,13 @@ defineProps({
   isAnimating: { type: Boolean, default: true },
 })
 
-const emit = defineEmits(['sprites-updated'])
+const emit = defineEmits(['spritesUpdated'])
 
 const pixiRenderer = ref(null)
 let app = null
-const bunnies = ref([])
+const sceneSprite = ref([])
 const background = ref(null)
+const spriteImageNames = ['pixi-logo', 'vue-logo', 'vue-pixi-logo']
 
 const onAppReady = (pixiApp) => {
   app = pixiApp
@@ -42,11 +43,11 @@ const onAppReady = (pixiApp) => {
 
     // Add ticker to update sprites
     app.ticker.add((delta) => {
-      updateBunnies(delta)
+      updateSceneSprite(delta)
     })
 
-    // Add initial bunnies
-    for (let i = 0; i < 5; i++) {
+    // Add initial sceneSprite
+    for (let i = 0; i < 3; i++) {
       addSceneSprite()
     }
   }
@@ -57,7 +58,10 @@ const addSceneSprite = () => {
   if (!app) return
 
   const { createSprite: createSceneSprite } = usePixiSprite(app)
-  const sprite = createSceneSprite('/assets/vue-logo.png')
+
+  const currentSpriteImageName = spriteImageNames[sceneSprite.value.length % 3]
+
+  const sprite = createSceneSprite(`/assets/${currentSpriteImageName}.png`)
 
   if (sprite) {
     // Set anchor point to center
@@ -71,11 +75,11 @@ const addSceneSprite = () => {
     sprite.vx = (Math.random() - 0.5) * 5
     sprite.vy = (Math.random() - 0.5) * 5
 
-    // Add to bunnies array
-    bunnies.value.push(sprite)
+    // Add to sceneSprite array
+    sceneSprite.value.push(sprite)
 
     // Emit updated count
-    emit('sprites-updated', bunnies.value.length)
+    emit('spritesUpdated', sceneSprite.value.length)
   }
 
   return sprite
@@ -83,19 +87,19 @@ const addSceneSprite = () => {
 
 // Remove the last sprite sprite
 const removeSceneSprite = () => {
-  if (bunnies.value.length > 0 && app) {
-    const sprite = bunnies.value.pop()
+  if (sceneSprite.value.length > 0 && app) {
+    const sprite = sceneSprite.value.pop()
     app.stage.removeChild(sprite)
     sprite.destroy()
 
     // Emit updated count
-    emit('sprites-updated', bunnies.value.length)
+    emit('spritesUpdated', sceneSprite.value.length)
   }
 }
 
 // Update sprite positions and rotations
-const updateBunnies = (delta) => {
-  bunnies.value.forEach((sprite) => {
+const updateSceneSprite = (delta) => {
+  sceneSprite.value.forEach((sprite) => {
     // Update position
     sprite.x += sprite.vx * delta
     sprite.y += sprite.vy * delta
